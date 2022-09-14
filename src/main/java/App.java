@@ -1,27 +1,29 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static java.sql.DriverManager.getConnection;
 
 public class App {
-    //static Connection con;
+    public static String SELECT_ALL_QUERY = "select * from tst_table1"; //" where number1 - number2 > 16497780";
+    public static String TRUNCATE_QUERY = "truncate tst_table1";
+    public static String UPDATE_QUERY = "update tst_table1 set number2 = ";
 
     public static void run() {
         try (Connection con = getNewConnection()) {
+            //write();
+            //read();
 
-            write();
-            read();
+            int n = 10000;
+            //executeInsertRandomNumber(con, n);
+            //executeUpdate(con, UPDATE_QUERY + "'" + (int) (Math.random() * 50000000) + "'");
 
-            int result = executeUpdate(con, "insert into tst_table1 values (2, 5654)");
-            ResultSet resultSet = executeSelect(con, "select * from tst_table1");
-            if (resultSet.next()) {
-                //Stream stream = Arrays.stream(resultSet.getArray(2));
-                //stream.forEach(x -> System.out.println(x));
+            ResultSet resultSet = executeSelect(con, SELECT_ALL_QUERY);
+            while (resultSet.next()) {
+                //System.out.println("Выборка: ");
+                //System.out.println(resultSet.getInt(1));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +59,16 @@ public class App {
         return result;
     }
 
-    private static void createCustomerTable() {
-
+    private static void executeInsertRandomNumber(Connection con, int n) throws SQLException {
+        //executeUpdate(con, TRUNCATE_QUERY);
+        String query = "insert into tst_table1 values(?, ?, ?)";
+        PreparedStatement ps = con.prepareStatement(query);
+        for (int i = 0; i < n; i++) {
+            ps.setInt(1, i);
+            ps.setInt(2, (int) (Math.random() * n / 2));
+            ps.setInt(3, (int) (Math.random() * n / 2));
+            ps.addBatch();
+        }
+        ps.executeBatch();
     }
 }
