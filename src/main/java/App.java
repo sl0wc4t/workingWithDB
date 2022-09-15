@@ -1,6 +1,10 @@
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.sql.DriverManager.getConnection;
@@ -31,9 +35,25 @@ public class App {
                 //System.out.println("Выборка: ");
                 //System.out.println(resultSet.getInt(1));
             }
-            entries.forEach(entry -> System.out.println(entry.printEntry()));
-            //Stream<Entry> stream = entries.stream();
-            //stream.forEach(x -> x % 2 == 1) System.out.println(x.printEntry()));
+            //entries.forEach(entry -> System.out.println(entry.printEntry()));
+            Stream<Entry> stream = entries.stream();
+            //stream.filter(x -> x.number1 > x.number2).forEach(x -> System.out.println(x.printEntry()));
+            //List<Integer> al = new ArrayList();
+            //al = stream.skip(100).filter(x -> x.id < 123).limit(10).map(x -> x.id).collect(Collectors.toList());//forEach(x -> System.out.println(x.printEntry()));
+            //al.forEach(System.out::println);
+            //stream.filter(x -> x.id < 100).sorted(Comparator.comparingInt(o -> o.number1)).forEach(x -> System.out.println(x.printEntry()));
+            //Integer var = stream.map(x -> x.id).min(Integer::compareTo).get();
+            //System.out.println(var);
+
+            //String[] arr;
+            //arr = stream.filter(x -> x.id < 100).map(Entry::printEntry).toArray(String[]::new);
+            //for (String str : arr) {
+            //System.out.println(str);
+            //}
+
+            int[] arr;
+            arr = stream.filter(x -> x.id < 100).mapToInt(Entry::getNumber1).toArray();
+            Arrays.stream(arr).forEach(System.out::println);
 
         } catch (Exception e) {
             e.printStackTrace();

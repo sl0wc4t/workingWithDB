@@ -12,4 +12,12 @@ public class Entry {
     public String printEntry() {
         return id + " " + number1 + " " + number2;
     }
+
+    public int getNumber1() {
+        return this.number1;
+    }
+
+    public int getNumber2() {
+        return this.number2;
+    }
 }
