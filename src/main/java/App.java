@@ -52,8 +52,9 @@ public class App {
             //}
 
             int[] arr;
-            arr = stream.filter(x -> x.id < 100).mapToInt(Entry::getNumber1).toArray();
-            Arrays.stream(arr).forEach(System.out::println);
+            arr = stream.filter(x -> x.id < 100).mapToInt(Entry::getId).toArray();
+            int i = Arrays.stream(arr).reduce(Integer::sum).getAsInt();//forEach(System.out::println);
+            System.out.println(i);
 
         } catch (Exception e) {
             e.printStackTrace();

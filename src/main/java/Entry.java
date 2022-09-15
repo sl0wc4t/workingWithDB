@@ -13,6 +13,10 @@ public class Entry {
         return id + " " + number1 + " " + number2;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public int getNumber1() {
         return this.number1;
     }
